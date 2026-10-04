@@ -1,0 +1,4 @@
+Model_Component,Model
+Stock Prediction,Logistic Regression
+News Sentiment,Logistic Regression
+Risk Classification,Random Forest

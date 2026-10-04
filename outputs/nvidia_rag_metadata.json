@@ -1,0 +1,8 @@
+{
+    "document": "NVIDIA Research Corpus",
+    "chunk_count": 649,
+    "vectorizer": "TF-IDF",
+    "ngram_range": "(1,2)",
+    "chunk_size_words": 150,
+    "overlap_words": 30
+}

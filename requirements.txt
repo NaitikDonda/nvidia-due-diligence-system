@@ -1,0 +1,14 @@
+certifi==2026.7.22
+charset-normalizer==3.5.1
+idna==3.19
+python-dotenv==1.2.1
+requests==2.32.5
+urllib3==2.6.3
+fastapi==0.115.0
+uvicorn==0.32.0
+pydantic==2.9.2
+pandas==2.2.2
+numpy==2.0.0
+scikit-learn==1.6.1
+scipy==1.13.1
+joblib==1.4.2

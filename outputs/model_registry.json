@@ -1,0 +1,34 @@
+{
+    "Stock Prediction": {
+        "model": "Logistic Regression",
+        "path": "../outputs/nvidia_logistic_final_model.pkl"
+    },
+    "News Sentiment": {
+        "model": "Logistic Regression",
+        "path": "../outputs/nvidia_financial_sentiment_model.pkl"
+    },
+    "Risk Classification": {
+        "model": "Random Forest",
+        "path": "../outputs/best_nvidia_risk_model.pkl"
+    },
+    "Market & Competitor": {
+        "model": "Logistic Regression",
+        "path": "../outputs/best_nvidia_market_competitor_model.pkl"
+    },
+    "Valuation": {
+        "model": "DCF + P/E Valuation",
+        "path": "../outputs/nvidia_dcf_model.pkl"
+    },
+    "Research": {
+        "model": "TF-IDF + K-Means Topic Model",
+        "path": "../outputs/nvidia_research_topic_model.pkl"
+    },
+    "Investment Synthesis": {
+        "model": "Rule-Based Synthesis",
+        "path": "../outputs/nvidia_investment_synthesis_model.pkl"
+    },
+    "Red-Team Verification": {
+        "model": "Rule-Based Verification Model",
+        "path": "../outputs/nvidia_red_team_model.pkl"
+    }
+}

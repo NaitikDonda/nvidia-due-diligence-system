@@ -1,0 +1,50 @@
+{
+    "recommendation": "BUY",
+    "confidence": 0.71,
+    "probabilities": {
+        "BUY": 0.71,
+        "HOLD": 0.29,
+        "SELL": 0.0
+    },
+    "signals": {
+        "stock_signal": 1,
+        "financial_signal": 1,
+        "market_signal": 1,
+        "risk_signal": 0,
+        "sentiment_signal": 0
+    },
+    "model_outputs": {
+        "stock": {
+            "prediction": "UP",
+            "probability_up": 0.9982780854862398,
+            "probability_down": 0.0017219145137602476,
+            "confidence": 0.9982780854862398
+        },
+        "financial": {
+            "financial_health": "STRONG"
+        },
+        "market": {
+            "market_position": "OUTPERFORMING"
+        },
+        "risk": {
+            "high_risk": 0,
+            "confidence": 0.7254620163652168
+        },
+        "sentiment": {
+            "sentiment": "neutral",
+            "confidence": 0.0,
+            "status": "fallback"
+        },
+        "valuation": {
+            "status": "Valuation data loaded",
+            "columns": [
+                "fy",
+                "revenue",
+                "net_income",
+                "Revenue_Growth",
+                "Net_Income_Growth",
+                "profit_margin"
+            ]
+        }
+    }
+}

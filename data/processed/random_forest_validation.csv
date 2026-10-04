@@ -1,0 +1,4 @@
+Metric,Value
+Holdout Accuracy,0.8875598086124402
+Cross-Validation Mean Accuracy,0.535632183908046
+Cross-Validation Std,0.09262288666357847

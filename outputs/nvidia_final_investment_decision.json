@@ -1,0 +1,23 @@
+{
+    "query": "Should I invest in NVIDIA?",
+    "recommendation": "BUY",
+    "confidence": 0.71,
+    "probabilities": {
+        "BUY": 0.71,
+        "HOLD": 0.29,
+        "SELL": 0.0
+    },
+    "signals": {
+        "stock_signal": 1,
+        "financial_signal": 1,
+        "market_signal": 1,
+        "risk_signal": 0,
+        "sentiment_signal": 0
+    },
+    "red_team": {
+        "recommendation": "BUY",
+        "verification_status": "PASS",
+        "contradiction_count": 0,
+        "contradictions": []
+    }
+}

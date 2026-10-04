@@ -1,0 +1,12 @@
+File,Description
+nvidia_gpu_cleaned.csv,Cleaned NVIDIA GPU specifications
+nvidia_product_data.csv,NVIDIA product-level features
+nvidia_financial_data.csv,NVIDIA annual financial data
+nvidia_stock_features.csv,NVIDIA historical stock features
+nvidia_news_features.csv,NVIDIA news and text features
+nvidia_ai_chip_market_complete.csv,NVIDIA AI chip market data
+amd_financial_data.csv,AMD annual financial data
+intel_financial_data.csv,Intel annual financial data
+amd_stock_features.csv,AMD historical stock features
+intel_stock_features.csv,Intel historical stock features
+nvidia_competitor_comparison.csv,NVIDIA vs AMD vs Intel market comparison
