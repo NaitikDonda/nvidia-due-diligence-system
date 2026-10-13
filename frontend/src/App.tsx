@@ -41,20 +41,29 @@ function RenderMessage({ text }: { text: string }) {
   )
 }
 
-// ── Confidence Gauge (SVG arc) ─────────────────────────────────────
+// ── Confidence Gauge (SVG Semi-Circle Speedometer) ─────────────────
 function ConfidenceGauge({ value }: { value: number }) {
   const pct = Math.round(value * 100)
-  const size = 180
-  const cx = size / 2
-  const cy = size / 2
-  const r = 62
-  const strokeWidth = 10
-  const circumference = 2 * Math.PI * r
-  // Render a 220-degree gauge arc for clean modern dial look
-  const totalAngle = 220
-  const totalArc = (totalAngle / 360) * circumference
-  const filledArc = totalArc * Math.min(Math.max(value, 0), 1)
-  const rotation = 160 // Starts symmetrically at bottom-left
+  const width = 180
+  const height = 115
+  const strokeWidth = 14
+  const cx = width / 2
+  const cy = 95
+  const r = 65
+  const pi = Math.PI
+
+  // Semi-circle starts at left (PI rad / 180 deg) and ends at right (0 rad / 0 deg)
+  const trackD = `M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`
+
+  // For active fill arc: angle goes from 0 to value * PI
+  const clampedVal = Math.min(Math.max(value, 0), 1)
+  const fillAngle = pi * clampedVal
+  const endX = cx - r * Math.cos(fillAngle)
+  const endY = cy - r * Math.sin(fillAngle)
+  const largeArcFlag = clampedVal > 1 ? 1 : 0
+  const fillD = clampedVal <= 0.01
+    ? ''
+    : `M ${cx - r} ${cy} A ${r} ${r} 0 ${largeArcFlag} 1 ${endX} ${endY}`
 
   const color = pct >= 60 ? '#76B900' : pct >= 40 ? '#ffc107' : '#f44336'
   const statusText = pct >= 60 ? 'HIGH' : pct >= 40 ? 'MODERATE' : 'LOW'
@@ -62,46 +71,36 @@ function ConfidenceGauge({ value }: { value: number }) {
   return (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <h4 className="chart-label">Confidence Score</h4>
-      <div style={{ position: 'relative', width: size, height: size * 0.78, display: 'flex', justifyContent: 'center' }}>
-        <svg
-          width={size}
-          height={size}
-          viewBox={`0 0 ${size} ${size}`}
-          style={{ transform: `rotate(${rotation}deg)`, transformOrigin: `${cx}px ${cy}px` }}
-        >
-          {/* Background Track */}
-          <circle
-            cx={cx}
-            cy={cy}
-            r={r}
+      <div style={{ position: 'relative', width, height }}>
+        <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+          {/* Background Arc Track */}
+          <path
+            d={trackD}
             fill="none"
-            stroke="#262838"
+            stroke="#1f2434"
             strokeWidth={strokeWidth}
-            strokeDasharray={`${totalArc} ${circumference}`}
             strokeLinecap="round"
           />
-          {/* Active Value Arc */}
-          <circle
-            cx={cx}
-            cy={cy}
-            r={r}
-            fill="none"
-            stroke={color}
-            strokeWidth={strokeWidth}
-            strokeDasharray={`${filledArc} ${circumference}`}
-            strokeLinecap="round"
-            style={{ transition: 'stroke-dasharray 0.8s ease' }}
-          />
+          {/* Active Progress Arc */}
+          {fillD && (
+            <path
+              d={fillD}
+              fill="none"
+              stroke={color}
+              strokeWidth={strokeWidth}
+              strokeLinecap="round"
+              style={{ transition: 'all 0.8s ease' }}
+            />
+          )}
         </svg>
 
-        {/* Centered Content */}
+        {/* Text centered inside the arch opening */}
         <div
           style={{
             position: 'absolute',
-            top: 0,
             left: 0,
             right: 0,
-            bottom: size * 0.22,
+            bottom: 6,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -109,8 +108,19 @@ function ConfidenceGauge({ value }: { value: number }) {
             pointerEvents: 'none',
           }}
         >
-          <span style={{ fontSize: '26px', fontWeight: 800, color, lineHeight: 1 }}>{pct}%</span>
-          <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', marginTop: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+          <span style={{ fontSize: '28px', fontWeight: 800, color, lineHeight: 1, letterSpacing: '-0.5px' }}>
+            {pct}%
+          </span>
+          <span
+            style={{
+              fontSize: '11px',
+              fontWeight: 700,
+              color: 'var(--text-muted)',
+              marginTop: '5px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.8px',
+            }}
+          >
             {statusText}
           </span>
         </div>
