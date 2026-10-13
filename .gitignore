@@ -3,3 +3,8 @@ venv/
 .DS_Store
 __pycache__/
 *.py[cod]
+node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+*.log
