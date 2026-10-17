@@ -421,6 +421,75 @@ def root():
     }
 
 
+@app.get("/market-overview")
+def get_market_overview():
+    """Retrieve compact financial overview metrics for NVIDIA."""
+    try:
+        import yfinance as yf
+        import datetime
+        ticker = yf.Ticker("NVDA")
+        fi = ticker.fast_info
+        price = round(float(fi.last_price), 2) if getattr(fi, "last_price", None) else None
+        prev_close = round(float(fi.previous_close), 2) if getattr(fi, "previous_close", None) else None
+        mcap = float(fi.market_cap) if getattr(fi, "market_cap", None) else None
+        change_pct = round(((price - prev_close) / prev_close) * 100, 2) if price and prev_close else 0.0
+        change_val = round(price - prev_close, 2) if price and prev_close else 0.0
+
+        mcap_formatted = f"${mcap / 1e12:.2f}T" if mcap and mcap >= 1e12 else f"${mcap / 1e9:.1f}B" if mcap else "N/A"
+
+        # Trailing/forward metrics if available
+        pe_ratio = "N/A"
+        rev_growth = "N/A"
+        profit_margin = "N/A"
+        try:
+            info = ticker.info
+            pe = info.get("trailingPE") or info.get("forwardPE")
+            if pe:
+                pe_ratio = f"{round(float(pe), 1)}x"
+            rg = info.get("revenueGrowth")
+            if rg is not None:
+                rev_growth = f"{round(float(rg) * 100, 1)}%"
+            pm = info.get("profitMargins")
+            if pm is not None:
+                profit_margin = f"{round(float(pm) * 100, 1)}%"
+        except Exception:
+            pass
+
+        return {
+            "symbol": "NVDA",
+            "name": "NVIDIA Corporation",
+            "price": price,
+            "change_val": change_val,
+            "change_pct": change_pct,
+            "market_cap": mcap_formatted,
+            "pe_ratio": pe_ratio,
+            "revenue_growth": rev_growth,
+            "profit_margin": profit_margin,
+            "period": "Trailing 12M / Live",
+            "source": "Nasdaq / Financial Statements",
+            "timestamp": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
+            "status": "live"
+        }
+    except Exception as e:
+        print(f"[Market Overview error]: {e}")
+        return {
+            "symbol": "NVDA",
+            "name": "NVIDIA Corporation",
+            "price": None,
+            "change_val": 0.0,
+            "change_pct": 0.0,
+            "market_cap": "N/A",
+            "pe_ratio": "N/A",
+            "revenue_growth": "N/A",
+            "profit_margin": "N/A",
+            "period": "Unavailable",
+            "source": "Financial Statements",
+            "timestamp": "Unavailable",
+            "status": "unavailable"
+        }
+
+
+
 def get_financial_history_chart_data():
     """Retrieve annual revenue and net income data for NVIDIA."""
     try:
